@@ -1,10 +1,10 @@
 [BITS 16]
 [ORG 0x7C00]
 BS_jmpBoot:
-	jmp start
+	jmp start0
 	nop
 	%include "fatTable.asm"
-start:
+start0:
 cli ; запрещение аппаратных прерываний
 MOV DH, 0x0 ;head (0=base)
 MOV CH, 0x0 ;track/cylinder
@@ -14,7 +14,7 @@ MOV ES, BX ;старший адрес RAM 0x1000
 MOV BX, 0x0 ;младший адрес RAM 0x0
 ReadSector:
 	MOV AH, 0x02 ;чтение сектора диска
-	MOV AL, 0x01 ;количество секторов для чтения
+	MOV AL, 0x02 ;количество секторов для чтения
 	INT 0x13
 
 	; Вывод сообщения
