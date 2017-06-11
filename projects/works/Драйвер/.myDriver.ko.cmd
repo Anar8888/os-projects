@@ -1,0 +1,1 @@
+cmd_/home/anar8888/Desktop/MyDriver/myDriver.ko := ld -r -m elf_x86_64 -T /usr/src/linux-headers-3.13.0-32-generic/scripts/module-common.lds --build-id  -o /home/anar8888/Desktop/MyDriver/myDriver.ko /home/anar8888/Desktop/MyDriver/myDriver.o /home/anar8888/Desktop/MyDriver/myDriver.mod.o

@@ -1,0 +1,88 @@
+anar8888@ubuntu:~/Desktop$ cd MyDriver/
+anar8888@ubuntu:~/Desktop/MyDriver$ make
+make -C /lib/modules/3.13.0-32-generic/build M=/home/anar8888/Desktop/MyDriver modules
+make[1]: Entering directory `/usr/src/linux-headers-3.13.0-32-generic'
+Building with KERNELRELEASE = 3.13.0-32-generic
+  CC [M]  /home/anar8888/Desktop/MyDriver/myDriver.o
+  Building modules, stage 2.
+Building with KERNELRELEASE = 3.13.0-32-generic
+  MODPOST 1 modules
+  LD [M]  /home/anar8888/Desktop/MyDriver/myDriver.ko
+make[1]: Leaving directory `/usr/src/linux-headers-3.13.0-32-generic'
+anar8888@ubuntu:~/Desktop/MyDriver$ lsmod | grep myDriver
+myDriver               12783  0 
+anar8888@ubuntu:~/Desktop/MyDriver$ ls /sys/class/char_test_drv
+chrnull
+anar8888@ubuntu:~/Desktop/MyDriver$ cat /proc/devices
+Character devices:
+  1 mem
+  4 /dev/vc/0
+  4 tty
+  4 ttyS
+  5 /dev/tty
+  5 /dev/console
+  5 /dev/ptmx
+  5 ttyprintk
+  6 lp
+  7 vcs
+ 10 misc
+ 13 input
+ 21 sg
+ 29 fb
+ 99 ppdev
+108 ppp
+116 alsa
+128 ptm
+136 pts
+180 usb
+189 usb_device
+216 rfcomm
+226 drm
+250 chr_test_driver
+251 hidraw
+252 bsg
+253 watchdog
+254 rtc
+
+Block devices:
+  1 ramdisk
+259 blkext
+  7 loop
+  8 sd
+  9 md
+ 11 sr
+ 65 sd
+ 66 sd
+ 67 sd
+ 68 sd
+ 69 sd
+ 70 sd
+ 71 sd
+128 sd
+129 sd
+130 sd
+131 sd
+132 sd
+133 sd
+134 sd
+135 sd
+252 device-mapper
+253 virtblk
+254 mdp
+anar8888@ubuntu:~/Desktop/MyDriver$ sudo chmod 777 /dev/chrnull
+anar8888@ubuntu:~/Desktop/MyDriver$ sudo echo “hi, my driver” > /dev/chrnull
+anar8888@ubuntu:~/Desktop/MyDriver$ sudo cat /dev/chrnull
+“hi, my driver”
+(20 letters) 
+anar8888@ubuntu:~/Desktop/MyDriver$ sudo rmmod myDriver
+anar8888@ubuntu:~/Desktop/MyDriver$ dmesg | tail
+[   59.341094] NET: Registered protocol family 40
+[  134.701011] audit_printk_skb: 138 callbacks suppressed
+[  134.701015] type=1400 audit(1497045903.061:70): apparmor="DENIED" operation="open" profile="/usr/lib/telepathy/mission-control-5" name="/usr/share/gvfs/remote-volume-monitors/" pid=2817 comm="mission-control" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  494.932662] My Driver: open()
+[  494.950422] Received 20 characters from the user
+[  494.953448] My Driver: close()
+[  513.591641] My Driver: open()
+[  513.591659] Sent 34 characters to the user
+[  513.591856] Sent 0 characters to the user
+[  513.591860] My Driver: close()
